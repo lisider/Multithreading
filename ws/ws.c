@@ -32,11 +32,11 @@
 #include "u_os.h"
 #include "u_assert.h"
 /* private */
-#include "hellotest.h"
-#include "hellotest_cli.h"
+#include "ws.h"
+#include "ws_cli.h"
 
-static HELLOTEST_OBJ_T t_g_ht               = {0};
-static UINT16 ui2_g_hellotest_dbg_level = DBG_INIT_LEVEL_APP_HELLOTEST;
+static WS_OBJ_T t_g_ht               = {0};
+static UINT16 ui2_g_ws_dbg_level = DBG_INIT_LEVEL_APP_WS;
 
 typedef enum
 {
@@ -48,15 +48,15 @@ typedef enum
 /*-----------------------------------------------------------------------------
  * private methods declarations
  *---------------------------------------------------------------------------*/
-static INT32 _hellotest_start (
+static INT32 _ws_start (
                     const CHAR*                 ps_name,
                     HANDLE_T                    h_app
                     );
-static INT32 _hellotest_exit (
+static INT32 _ws_exit (
                     HANDLE_T                    h_app,
                     APP_EXIT_MODE_T             e_exit_mode
                     );
-static INT32 _hellotest_process_msg (
+static INT32 _ws_process_msg (
                     HANDLE_T                    h_app,
                     UINT32                      ui4_type,
                     const VOID*                 pv_msg,
@@ -71,7 +71,7 @@ static INT32 _hellotest_process_msg (
  * Output arguments -
  * Returns          -
  *---------------------------------------------------------------------------*/
-VOID a_hellotest_register(
+VOID a_ws_register(
                 AMB_REGISTER_INFO_T*            pt_reg
                 )
 {
@@ -81,10 +81,10 @@ VOID a_hellotest_register(
 	DBG_API_IN;
     /* Application can only use middleware's c_ API */
     memset(pt_reg->s_name, 0, sizeof(CHAR)*(APP_NAME_MAX_LEN + 1));
-    strncpy(pt_reg->s_name, HELLOTEST_THREAD_NAME, APP_NAME_MAX_LEN);
-    pt_reg->t_fct_tbl.pf_init                   = _hellotest_start;
-    pt_reg->t_fct_tbl.pf_exit                   = _hellotest_exit;
-    pt_reg->t_fct_tbl.pf_process_msg            = _hellotest_process_msg;
+    strncpy(pt_reg->s_name, WS_THREAD_NAME, APP_NAME_MAX_LEN);
+    pt_reg->t_fct_tbl.pf_init                   = _ws_start;
+    pt_reg->t_fct_tbl.pf_exit                   = _ws_exit;
+    pt_reg->t_fct_tbl.pf_process_msg            = _ws_process_msg;
 
     pt_reg->t_desc.ui8_flags                    = ~((UINT64)0);
     pt_reg->t_desc.t_thread_desc.z_stack_size   = 4096;
@@ -98,23 +98,23 @@ VOID a_hellotest_register(
 
 UINT16 ht_get_dbg_level(VOID)
 {
-    return (ui2_g_hellotest_dbg_level | DBG_LAYER_APP);
+    return (ui2_g_ws_dbg_level | DBG_LAYER_APP);
 }
 
 VOID ht_set_dbg_level(UINT16 ui2_db_level)
 {
-    ui2_g_hellotest_dbg_level = ui2_db_level;
+    ui2_g_ws_dbg_level = ui2_db_level;
 }
 
 
-static INT32 _hellotest_start (
+static INT32 _ws_start (
                     const CHAR*                 ps_name,
                     HANDLE_T                    h_app
                     )
 {
     INT32 i4_ret;
     DBG_API_IN;
-    memset(&t_g_ht, 0, sizeof(HELLOTEST_OBJ_T));
+    memset(&t_g_ht, 0, sizeof(WS_OBJ_T));
     t_g_ht.h_app = h_app;
 
 
@@ -130,7 +130,7 @@ static INT32 _hellotest_start (
             i4_ret ));
         return AEER_FAIL;
     }
-    ht_set_dbg_level(DBG_INIT_LEVEL_APP_HELLOTEST);
+    ht_set_dbg_level(DBG_INIT_LEVEL_APP_WS);
 #endif/* CLI_SUPPORT */
 
     t_g_ht.b_app_init_ok = TRUE;
@@ -156,7 +156,7 @@ static INT32 _hellotest_start (
     return AEER_OK;
 }
 
-static INT32 _hellotest_exit (
+static INT32 _ws_exit (
                     HANDLE_T                    h_app,
                     APP_EXIT_MODE_T             e_exit_mode
                     )
@@ -172,13 +172,13 @@ static INT32 _hellotest_exit (
 
 /*---------------------------------------------------------------------------
  * Name
- *      _hellotest_process_msg
+ *      _ws_process_msg
  * Description      -
  * Input arguments  -
  * Output arguments -
  * Returns          -
  *---------------------------------------------------------------------------*/
-static INT32 _hellotest_process_msg (
+static INT32 _ws_process_msg (
                     HANDLE_T                    h_app,
                     UINT32                      ui4_type,
                     const VOID*                 pv_msg,

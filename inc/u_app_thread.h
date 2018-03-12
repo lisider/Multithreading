@@ -45,7 +45,7 @@
 
 
 #define TIMERD_THREAD_NAME          "timerd"
-#define WSTRANSFER_THREAD_NAME          "wstransfer"
+#define WS_THREAD_NAME          "wstransfer"
 #define HELLOTEST_THREAD_NAME       "hellotest"
 #define PPC_THREAD_NAME				"ppcSetting"
 #define USER_INTERFACE_THREAD_NAME	"user_interface"

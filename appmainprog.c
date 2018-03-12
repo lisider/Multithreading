@@ -75,6 +75,7 @@ extern VOID a_upg_control_register(AMB_REGISTER_INFO_T* pt_reg);
 #if CONFIG_SUPPORT_BT_HFP_APP
 extern VOID a_bluetooth_hfp_register(AMB_REGISTER_INFO_T* pt_reg);
 #endif
+extern VOID a_ws_register(AMB_REGISTER_INFO_T* pt_reg);
 
 /*-----------------------------------------------------------------------------
  * private function declarations
@@ -88,8 +89,8 @@ VOID x_appl_init (VOID);
 //void* g_mas_handle = NULL;
 
 static APP_REG app_to_reg[] = {
-    //{a_wstransfer_register,{0},WSTRANSFER_THREAD_NAME}
-    {a_hellotest_register,{0},HELLOTEST_THREAD_NAME},
+    {a_ws_register,{0},WS_THREAD_NAME},
+//    {a_hellotest_register,{0},HELLOTEST_THREAD_NAME},
 #if 0
 		{a_timerd_register,{0},TIMERD_THREAD_NAME},
         {a_acfg_register,{0},ACFG_THREAD_NAME},

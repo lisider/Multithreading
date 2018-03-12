@@ -16,8 +16,7 @@ SET(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 AUX_SOURCE_DIRECTORY(. SRCS)
 ADD_SUBDIRECTORY(mw)
-#ADD_SUBDIRECTORY(ws)
-ADD_SUBDIRECTORY(hellotest)
+ADD_SUBDIRECTORY(ws)
 ADD_SUBDIRECTORY(am)
 ADD_SUBDIRECTORY(cli)
 ADD_SUBDIRECTORY(timerd)
@@ -27,5 +26,5 @@ INCLUDE_DIRECTORIES(inc)
 
 ADD_EXECUTABLE(appmainprog ${SRCS})
 #TARGET_LINK_LIBRARIES(appmainprog  aee amb am mw cli timerd )
-TARGET_LINK_LIBRARIES(appmainprog    mw hellotest am cli timerd )
+TARGET_LINK_LIBRARIES(appmainprog    mw  ws am cli timerd )
 

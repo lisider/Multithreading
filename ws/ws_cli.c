@@ -29,7 +29,7 @@
 
 #include "u_aee.h"
 
-#include "hellotest_cli.h"
+#include "ws_cli.h"
 #include "curl/curl.h"
 #include "pthread.h"
 
@@ -137,11 +137,11 @@ static CLI_EXEC_T at_ht_cmd_tbl[] =
 static CLI_EXEC_T at_ht_root_cmd_tbl[] =
 {
 	{   
-	    "hellotest",
+	    "ws",
 	    "ht",
 	    NULL,
 	    at_ht_cmd_tbl,
-	    "Hellotest commands",
+	    "ws commands",
 	    CLI_GUEST
 	},
 	END_OF_CLI_CMD_TBL

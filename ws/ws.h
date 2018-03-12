@@ -23,37 +23,87 @@
  *     THE TRANSACTION CONTEMPLATED HEREUNDER SHALL BE CONSTRUED IN ACCORDANCE WITH THE LAWS 
  *     OF THE STATE OF CALIFORNIA, USA, EXCLUDING ITS CONFLICT OF LAWS PRINCIPLES.  
  ************************************************************************************************/
-#ifndef _HELLOTEST_CLI_H_
-#define _HELLOTEST_CLI_H_
+#ifndef _WS_H_
+#define _WS_H_
 /*-----------------------------------------------------------------------------
                     include files
 -----------------------------------------------------------------------------*/
-#include "hellotest.h"
+#include "u_common.h"
+#include "u_dbg.h"
+#include "u_timerd.h"
 
-#define HTCLI_TAG               "<HT_CLI> "
+#undef   DBG_LEVEL_MODULE
+#define  DBG_LEVEL_MODULE       ht_get_dbg_level()
 
-#define DBG_INIT_LEVEL_APP_HELLOTEST    (DBG_LEVEL_ALL | DBG_LAYER_APP)
-#undef  DBG_LEVEL_MODULE
-#define DBG_LEVEL_MODULE    ht_get_dbg_level()
+#define HT_TAG "<HELLO> "
+typedef struct _WS_MSG_T
+{
+    UINT32          ui4_msg_id;    
+    UINT32          ui4_data1;
+    UINT32          ui4_data2;
+    UINT32          ui4_data3;
+} WS_MSG_T;
+
+/* application structure */
+typedef struct _WS_OBJ_T
+{
+    HANDLE_T        h_app;    
+    HANDLE_T        h_iom;
+    BOOL            b_app_init_ok;
+    BOOL            b_recv_iom_msg;
+
+	
+	TIMER_TYPE_T my_timer_rep;
+	TIMER_TYPE_T my_timer_once;
+}WS_OBJ_T;
+
+/*app private  msg*/
+enum
+{
+    WS_PRI_KEY_MSG,
+    WS_PRI_DM_MSG,
+    
+    WS_PRI_MAX_MSG
+};
+
+//------------------------------------------------------------------------------
+//msg between ht and misc
+#define MAX_USR_MSG_LEN     20
+typedef struct
+{
+    UINT32      ui4_sender_id;      //in order to imitate APPMSG_T, the first two data just like it.
+    UINT32      ui4_msg_type;
+
+    BYTE        uc_usr_msg[MAX_USR_MSG_LEN + 1];
+
+}HT_MISC_MSG_T;
 
 typedef enum
 {
-    HT_WIFI_STA_CONNECT_NONE,
-    HT_WIFI_STA_CONNECT_SCAN,
-    HT_WIFI_STA_CONNECTING,
-    HT_WIFI_STA_CONNECT_FAIL,
-    HT_WIFI_STA_CONNECT_ON,
-    HT_WIFI_STA_DISCONNECT
-}HT_WIFI_CONNECT_STATUS_T;
+    HT_TO_MISC_KEY_MSG,
+    HT_TO_MISC_USER_MSG,
+
+    MISC_TO_HT_KEY_MSG,
+
+    HT_MISC_MAX_MSG
+}HT_MISC_MSG_TYPE_T;
+
+//------------------------------------------------------------------------------
+//key info
+typedef struct _IRRC_KEY_MAP
+{
+    char     *cName;
+    UINT32   ui2_crystalkey;
+    BOOL     b_support_repeat;
+}   IRRC_KEY_MAP; 
+extern const IRRC_KEY_MAP irrc_key_map[];
 
 /*------------------------------------------------------------------------------
                                             funcitons declarations
 ------------------------------------------------------------------------------*/
-
-
-#ifdef CLI_SUPPORT
-extern INT32 ht_cli_attach_cmd_tbl(VOID);
-#endif /* CLI_SUPPORT */
-                                                                                                  
-#endif /* _HELLOTEST_CLI_H_ */
-
+extern UINT16 ht_get_dbg_level(VOID);
+extern VOID ht_set_dbg_level(UINT16 ui2_db_level);
+extern VOID ht_enable_recv_iom_msg(VOID);
+extern VOID ht_disable_recv_iom_msg(VOID);
+                                                                                                 
+#endif /* _WS_H_ */
