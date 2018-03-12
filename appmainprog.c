@@ -88,6 +88,8 @@ VOID x_appl_init (VOID);
 //void* g_mas_handle = NULL;
 
 static APP_REG app_to_reg[] = {
+    //{a_wstransfer_register,{0},WSTRANSFER_THREAD_NAME}
+    {a_hellotest_register,{0},HELLOTEST_THREAD_NAME},
 #if 0
 		{a_timerd_register,{0},TIMERD_THREAD_NAME},
         {a_acfg_register,{0},ACFG_THREAD_NAME},
