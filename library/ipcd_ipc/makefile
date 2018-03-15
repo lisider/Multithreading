@@ -7,8 +7,7 @@ TARGET  := libipcd.so
 LIBS    :=
 LDFLAGS :=
 DEFINES :=
-INCLUDE := -I ../../../main/inc  \
-           -I ../../../main/app_util
+INCLUDE := -I ../../inc  
            
 CFLAGS  := -g -Wall -fPIC -O3 $(DEFINES) $(INCLUDE)
 CXXFLAGS:= $(CFLAGS) -DHAVE_CONFIG_H
