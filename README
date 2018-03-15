@@ -1,2 +1,9 @@
 sudo apt-get install libcurl4-gnutls-dev
 source build.sh
+
+# 添加线程 
+source add_new_thread.sh
+
+然后 
+source build.sh 时,会出现 
+ht_get_dbg_level 重定义
