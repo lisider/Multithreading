@@ -6,19 +6,22 @@
 # Version : 1.0
 #########################################################################
 #!/bin/bash
-cp ws $1 -r
+
+SAMPLE=sample
+
+cp doc/${SAMPLE} $1 -r
 cd $1
 
 BIG_1=`echo ${1} | tr '[a-z]' '[A-Z]'`
-echo ${BIG_1}
+BIG_SAMPLE=`echo ${SAMPLE} | tr '[a-z]' '[A-Z]'`
 
-sed -i "s/WS/${BIG_1}/g" * 
-sed -i "s/ws/$1/g" * 
+sed -i "s/${BIG_SAMPLE}/${BIG_1}/g" * 
+sed -i "s/${SAMPLE}/$1/g" * 
 
-mv ws.c $1.c
-mv ws_cli.c  $1_cli.c
-mv ws_cli.h  $1_cli.h
-mv ws.h $1.h
+mv ${SAMPLE}.c $1.c
+mv ${SAMPLE}_cli.c  $1_cli.c
+mv ${SAMPLE}_cli.h  $1_cli.h
+mv ${SAMPLE}.h $1.h
 
 cd ..
 
