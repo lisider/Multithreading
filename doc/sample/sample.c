@@ -96,15 +96,15 @@ VOID a_sample_register(
     return;
 }
 
-UINT16 ht_get_dbg_level(VOID)
-{
-    return (ui2_g_sample_dbg_level | DBG_LAYER_APP);
-}
-
-VOID ht_set_dbg_level(UINT16 ui2_db_level)
-{
-    ui2_g_sample_dbg_level = ui2_db_level;
-}
+/** UINT16 ht_get_dbg_level(VOID) */
+/** { */
+/**     return (ui2_g_sample_dbg_level | DBG_LAYER_APP); */
+/** } */
+/**  */
+/** VOID ht_set_dbg_level(UINT16 ui2_db_level) */
+/** { */
+/**     ui2_g_sample_dbg_level = ui2_db_level; */
+/** } */
 
 
 static INT32 _sample_start (
